@@ -128,7 +128,7 @@
                 android:textColor="@android:color/black"
                 android:focusable="true"
                 android:fontFamily="@font/montserrat"
-                android:text="My Plants"
+                android:text="Help Line"
                 android:textSize="16sp"
 
                 app:layout_constraintBottom_toTopOf="@+id/loginid"
