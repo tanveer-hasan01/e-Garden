@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     binding.waterPump.setClickable(false);
                     binding.waterPump.setChecked(false);
-                    Tools.snackInfo(MainActivity.this,"Water pump is automatic On/OFF");
+                    Tools.snackInfo(MainActivity.this,"Water pump is automatically On/OFF");
 
                 } else {
                     binding.waterPump.setClickable(true);

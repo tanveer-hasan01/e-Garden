@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -26,19 +27,53 @@ public class Home extends Fragment {
 
 
 
+        if (binding.autoWatering.isChecked())
+        {
+            binding.waterPump.setClickable(false);
+            binding.waterPump.setChecked(false);
+        }else {
+
+            binding.waterPump.setClickable(true);
+        }
+
+
         binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
-                    binding.waterPump.setClickable(false);
+
+                    Tools.snackInfo((Activity) getContext(),"Water pump is automatically On/OFF");
                     binding.waterPump.setChecked(false);
-                    Tools.snackInfo((Activity) getContext(),"Water pump is automatic On/OFF");
 
                 } else {
-                    binding.waterPump.setClickable(true);
+
+
                 }
             }
         });
+
+
+
+        binding.waterPump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (binding.autoWatering.isChecked())
+                {
+
+                    binding.waterPump.setChecked(false);
+                    Tools.snackErrInfo((Activity) getContext(), "Turn off Automatic watering !", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                }else {
+
+                }
+            }
+        });
+
 
 
 
