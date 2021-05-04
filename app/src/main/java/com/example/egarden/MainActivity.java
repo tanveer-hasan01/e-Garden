@@ -7,14 +7,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.egarden.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Map;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -50,8 +56,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
         binding.navigationView.setNavigationItemSelectedListener(this);
-        binding.list.setOnClickListener((View.OnClickListener) this);
+        binding.help.setOnClickListener((View.OnClickListener) this);
         initFragmentHome();
+
+        binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    binding.waterPump.setClickable(false);
+                    binding.waterPump.setChecked(false);
+                    Tools.snackInfo(MainActivity.this,"Water pump is automatic On/OFF");
+
+                } else {
+                    binding.waterPump.setClickable(true);
+                }
+            }
+        });
 
     }
 
@@ -68,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         switch (view.getId()) {
-            case R.id.list:
+            case R.id.help:
 
 
         }
