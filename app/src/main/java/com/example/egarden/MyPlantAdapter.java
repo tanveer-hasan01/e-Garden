@@ -35,6 +35,10 @@ public class MyPlantAdapter extends FirebaseRecyclerAdapter<Model_data,MyPlantAd
     protected void onBindViewHolder(@NonNull Holder holder, int position, @NonNull Model_data model) {
 
 
+        holder.binding.name.setText(model.getName());
+        holder.binding.percentage.setText(model.getMoisture());
+        holder.binding.progress.setProgress(Integer.parseInt(model.getMoisture()));
+
 
     }
 

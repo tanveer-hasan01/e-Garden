@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "203453198188",
+    "firebase_url": "https://egarden-2e35d-default-rtdb.firebaseio.com",
+    "project_id": "egarden-2e35d",
+    "storage_bucket": "egarden-2e35d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203453198188:android:9d725fb69b295325098d49",
+        "android_client_info": {
+          "package_name": "com.example.egarden"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203453198188-9l0329lts0nhea5r1najhfqhsul4e6mj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHCTEDLNfysnolD4Uqqknmqx-30mC1X34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203453198188-9l0329lts0nhea5r1najhfqhsul4e6mj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
