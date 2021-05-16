@@ -16,144 +16,195 @@
 
 
 
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
+    <RelativeLayout
         android:layout_width="250dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_marginEnd="-65dp"
-        android:layout_marginRight="-65dp"
-        android:background="@android:color/white"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-
-            android:background="@color/white"
-            android:orientation="vertical">
-
-
+        <androidx.cardview.widget.CardView
+            android:layout_alignParentBottom="true"
+            android:layout_width="250dp"
+            android:layout_height="80dp">
 
             <RelativeLayout
-                android:background="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="250dp"
+
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginEnd="-65dp"
+            android:layout_marginRight="-65dp"
+            android:background="@android:color/white"
+            android:fitsSystemWindows="true">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="165dp">
-
-                <ImageView
-                    android:layout_marginLeft="16dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/logo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
+                android:layout_height="match_parent"
 
 
-                <TextView
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                    android:paddingBottom="5dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_alignParentBottom="true"
-                    android:textSize="16dp"
-                    android:textColor="@color/white"
+
+
+                <RelativeLayout
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp">
+
+                    <ImageView
+
+                        android:id="@+id/profile_image"
+                        android:layout_margin="16sp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/logo"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                    <ImageView
+                        android:layout_marginLeft="16dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/logo"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+
+
+                    <TextView
+
+                        android:paddingBottom="5dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_alignParentBottom="true"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="eGarden"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+
+
+                </RelativeLayout>
+
+
+                <Switch
+                    android:id="@+id/auto_watering"
+                    android:textSize="16sp"
                     android:fontFamily="@font/montserrat"
-                    android:text="eGarden"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Automatic Watering  "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Switch
+                    android:id="@+id/water_pump"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Water Pump  "
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
 
 
-
-            </RelativeLayout>
-
-
-            <Switch
-                android:id="@+id/auto_watering"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Automatic Watering  "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <Switch
-                android:id="@+id/water_pump"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Water Pump  "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-
-            <TextView
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="8dp"
-                android:text="Water Tank Level"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:layout_width="100dp"
-                    android:progress="80"
-                    android:layout_marginTop="27dp"
-                    app:indicatorColor="@android:color/holo_blue_bright"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_height="30dp"/>
-
                 <TextView
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="8dp"
-                    android:text="80 %"
+                    android:text="Water Tank Level"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:fontFamily="@font/montserrat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:layout_width="100dp"
+                        android:progress="80"
+                        android:layout_marginTop="27dp"
+                        app:indicatorColor="@android:color/holo_blue_bright"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_height="30dp"/>
+
+                    <TextView
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="8dp"
+                        android:text="80 %"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:id="@+id/help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true"
+
+                    android:textColor="@android:color/black"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Help Line"
+                    android:textSize="16sp"
+
+                    app:layout_constraintBottom_toTopOf="@+id/loginid"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true"
+
+                    android:textColor="@android:color/black"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Logout"
+                    android:textSize="16sp"
+
+                    app:layout_constraintBottom_toTopOf="@+id/loginid"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+
             </LinearLayout>
 
-
-
-            <TextView
-                android:id="@+id/help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="true"
-
-                android:textColor="@android:color/black"
-                android:focusable="true"
-                android:fontFamily="@font/montserrat"
-                android:text="Help Line"
-                android:textSize="16sp"
-
-                app:layout_constraintBottom_toTopOf="@+id/loginid"
-                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.navigation.NavigationView>
 
 
 
 
 
 
-        </LinearLayout>
+    </RelativeLayout>
 
-    </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

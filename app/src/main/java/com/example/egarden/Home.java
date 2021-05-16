@@ -83,8 +83,8 @@ public class Home extends Fragment {
         FirebaseRecyclerOptions<Model_data> options1 =
                 new FirebaseRecyclerOptions.Builder<Model_data>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("plants").
-                                startAt(sharedPreference.getData()).orderByChild(sharedPreference.getData()).
-                                endAt(sharedPreference.getData() + "\uf8ff"), Model_data.class)
+                                startAt(sharedPreference.getEmail()).orderByChild(sharedPreference.getEmail()).
+                                endAt(sharedPreference.getEmail() + "\uf8ff"), Model_data.class)
                         .build();
 
 

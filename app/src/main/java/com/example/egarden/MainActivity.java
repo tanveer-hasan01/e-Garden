@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.egarden.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView toolbarTitle;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+    SharedPreference sharedPreference = SharedPreference.getPreferences(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +40,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
 
-
-        toolbarr=findViewById(R.id.toolbar);
+        toolbarr = findViewById(R.id.toolbar);
         setSupportActionBar(toolbarr);
 
-        toolbarTitle=findViewById(R.id.toolbarTitle);
+        toolbarTitle = findViewById(R.id.toolbarTitle);
         toolbarTitle.setText(R.string.app_name);
 
         setSupportActionBar(binding.include.toolbar);
 
-        actionBarDrawerToggle=new ActionBarDrawerToggle(this,
-                binding.drawerLayout,binding.include.toolbar,R.string.open, R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,
+                binding.drawerLayout, binding.include.toolbar, R.string.open, R.string.close);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getColor(R.color.white));
 
 
@@ -59,13 +60,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.help.setOnClickListener((View.OnClickListener) this);
         initFragmentHome();
 
+        Glide.with(MainActivity.this)
+                .load(sharedPreference.getImage())
+                .into(binding.profileImage);
+
+
         binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
                     binding.waterPump.setClickable(false);
                     binding.waterPump.setChecked(false);
-                    Tools.snackInfo(MainActivity.this,"Water pump is automatically On/OFF");
+                    Tools.snackInfo(MainActivity.this, "Water pump is automatically On/OFF");
 
                 } else {
                     binding.waterPump.setClickable(true);
@@ -76,10 +82,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void initFragmentHome(){
-        homeFragment=new Home();
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(binding.include.contentMain.fragmentContainer.getId(),homeFragment,"HomeFragment").commit();
+    private void initFragmentHome() {
+        homeFragment = new Home();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(binding.include.contentMain.fragmentContainer.getId(), homeFragment, "HomeFragment").commit();
 
     }
 
