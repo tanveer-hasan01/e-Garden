@@ -1,8 +1,12 @@
 package com.example.egarden;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -18,6 +22,8 @@ import android.widget.Toast;
 import com.example.egarden.databinding.FragmentHomeBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import static android.content.ContentValues.TAG;
 
@@ -35,6 +41,15 @@ public class Home extends Fragment {
         View view = binding.getRoot();
 
         sharedPreference = SharedPreference.getPreferences(getContext());
+
+        binding.feb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                scan();
+            }
+        });
+
 
         if (binding.autoWatering.isChecked()) {
             binding.waterPump.setClickable(false);
@@ -84,13 +99,7 @@ public class Home extends Fragment {
         });
 
 
-       /* binding.waterPump.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });*/
 
 
         binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
@@ -110,4 +119,45 @@ public class Home extends Fragment {
 
         return view;
     }
+
+    public void scan() {
+        IntentIntegrator intentIntegrator = new IntentIntegrator((Activity) getContext());
+        intentIntegrator.setPrompt("Scan Device QR Code");
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setOrientationLocked(true);
+        intentIntegrator.setCaptureActivity(Capture.class);
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(
+                requestCode, resultCode, data
+        );
+
+        if (intentResult.getContents() != null) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Result");
+            builder.setMessage(intentResult.getContents());
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            ;
+            builder.setNegativeButton("Try Again", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    scan();
+                }
+            });
+            builder.show();
+        }
+
+    }
+
 }

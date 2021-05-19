@@ -149,6 +149,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
+        android:id="@+id/feb"
         android:src="@drawable/ic_device"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
