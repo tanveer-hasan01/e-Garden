@@ -8,10 +8,10 @@ public class Model_data {
 
     }
 
-    public Model_data(String id, String name, String moisture) {
+    public Model_data(String id, String name, String Moisture) {
         this.id = id;
         this.name = name;
-        Moisture = moisture;
+        this.Moisture = Moisture;
     }
 
     public String getId() {

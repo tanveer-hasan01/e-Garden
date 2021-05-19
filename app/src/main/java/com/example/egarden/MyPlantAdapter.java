@@ -36,8 +36,17 @@ public class MyPlantAdapter extends FirebaseRecyclerAdapter<Model_data,MyPlantAd
 
 
         holder.binding.name.setText(model.getName());
-        holder.binding.percentage.setText(model.getMoisture());
+        holder.binding.percentage.setText(model.getMoisture()+" %");
+        int getMoisture= Integer.parseInt(model.getMoisture());
+        if (getMoisture<40)
+        {
+            holder.binding.imStatus.setImageResource(R.drawable.ic_error);
+        }else {
+            holder.binding.imStatus.setImageResource(R.drawable.ic_green);
+        }
+
         holder.binding.progress.setProgress(Integer.parseInt(model.getMoisture()));
+
 
 
     }

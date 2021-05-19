@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.egarden.databinding.FragmentHomeBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -32,7 +33,7 @@ public class Home extends Fragment {
     FragmentHomeBinding binding;
     MyPlantAdapter adapter;
     SharedPreference sharedPreference;
-
+    DatabaseReference databaseRef;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class Home extends Fragment {
         View view = binding.getRoot();
 
         sharedPreference = SharedPreference.getPreferences(getContext());
-
+        databaseRef = FirebaseDatabase.getInstance().getReference("plants");
         binding.feb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,18 +105,18 @@ public class Home extends Fragment {
 
         binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
 
-     /*   FirebaseRecyclerOptions<Model_data> options1 =
+        FirebaseRecyclerOptions<Model_data> options1 =
                 new FirebaseRecyclerOptions.Builder<Model_data>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("plants").
-                                startAt(sharedPreference.getEmail()).orderByChild(sharedPreference.getEmail()).
-                                endAt(sharedPreference.getEmail() + "\uf8ff"), Model_data.class)
+                       //.setQuery(FirebaseDatabase.getInstance().getReference().child("plants").orderByChild("email").startAt(sharedPreference.getEmail()).endAt(sharedPreference.getEmail() + "\uf8ff"), Model_data.class)
+
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("plants"), Model_data.class)
                         .build();
 
 
         adapter = new MyPlantAdapter(options1, getContext());
         binding.recycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();*/
-
+        adapter.startListening();
+        adapter.notifyDataSetChanged();
 
         return view;
     }
@@ -157,6 +158,19 @@ public class Home extends Fragment {
             });
             builder.show();
         }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
 
     }
 
