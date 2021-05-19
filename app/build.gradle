@@ -62,6 +62,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
         implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
 
 }

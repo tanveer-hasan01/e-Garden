@@ -14,9 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.egarden.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Map;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbarr;
     TextView toolbarTitle;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private GoogleSignInClient mGoogleSignInClient;
 
     SharedPreference sharedPreference = SharedPreference.getPreferences(MainActivity.this);
 
@@ -47,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbarTitle.setText(R.string.app_name);
 
         setSupportActionBar(binding.include.toolbar);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,
                 binding.drawerLayout, binding.include.toolbar, R.string.open, R.string.close);
@@ -66,6 +79,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         binding.name.setText(sharedPreference.getName());
         binding.email.setText(sharedPreference.getEmail());
+
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sharedPreference.setName("none");
+                sharedPreference.setEmail("none");
+                sharedPreference.setImage("none");
+                signOut();
+                revokeAccess();
+                Toast.makeText(MainActivity.this, "Successfully Logout", Toast.LENGTH_SHORT).show();
+                Intent mainIntent = new Intent(MainActivity.this, Splash.class);
+                MainActivity.this.startActivity(mainIntent);
+                MainActivity.this.finish();
+
+
+            }
+        });
 
 
         /*binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -146,5 +177,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
+    }
+
+    private void revokeAccess() {
+        mGoogleSignInClient.revokeAccess()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
     }
 }
