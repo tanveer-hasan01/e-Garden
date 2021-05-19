@@ -28,9 +28,9 @@ public class login extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     private static final String TAG = "GoogleActivity";
-    private static final int RC_SIGN_IN = 9001;
+    private static final int RC_SIGN_IN = 101;
 
-    SharedPreference sharedPreference=SharedPreference.getPreferences(login.this);
+    SharedPreference sharedPreference;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -39,7 +39,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        sharedPreference = SharedPreference.getPreferences(login.this);
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -68,22 +68,49 @@ public class login extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+       /* if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
 
-                firebaseAuthWithGoogle(account.getIdToken(),account.getDisplayName(),""+account.getPhotoUrl(),account.getEmail());
+                firebaseAuthWithGoogle(account.getIdToken(), account.getDisplayName(), "" + account.getPhotoUrl(), account.getEmail());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
             }
+        }*/
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken,String name,String image,String email) {
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            sharedPreference.setName(account.getDisplayName());
+            sharedPreference.setEmail(account.getEmail());
+            sharedPreference.setImage(""+account.getPhotoUrl());
+            startActivity(new Intent(login.this, MainActivity.class));
+
+
+            updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            updateUI(null);
+        }
+    }
+
+
+   /* private void firebaseAuthWithGoogle(String idToken, String name, String image, String email) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -96,11 +123,11 @@ public class login extends AppCompatActivity {
                             sharedPreference.setName(name);
                             sharedPreference.setName(email);
                             sharedPreference.setName(image);
-                            startActivity(new Intent(login.this,MainActivity.class));
-                           // updateUI(user);
+                            startActivity(new Intent(login.this, MainActivity.class));
+                            // updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Tools.snackErrInfo(login.this, ""+task.getException(), new View.OnClickListener() {
+                            Tools.snackErrInfo(login.this, "" + task.getException(), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
@@ -112,9 +139,9 @@ public class login extends AppCompatActivity {
                         }
                     }
                 });
-    }
+    }*/
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(GoogleSignInAccount user) {
 
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.example.egarden.databinding.FragmentHomeBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static android.content.ContentValues.TAG;
 
 public class Home extends Fragment {
 
@@ -58,9 +61,10 @@ public class Home extends Fragment {
         });
 
 
-        binding.waterPump.setOnClickListener(new View.OnClickListener() {
+        binding.waterPump.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
 
                 if (binding.autoWatering.isChecked()) {
 
@@ -73,14 +77,25 @@ public class Home extends Fragment {
                     });
                 } else {
 
+
                 }
+
             }
         });
 
 
+       /* binding.waterPump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });*/
+
+
         binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
 
-        FirebaseRecyclerOptions<Model_data> options1 =
+     /*   FirebaseRecyclerOptions<Model_data> options1 =
                 new FirebaseRecyclerOptions.Builder<Model_data>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("plants").
                                 startAt(sharedPreference.getEmail()).orderByChild(sharedPreference.getEmail()).
@@ -90,7 +105,7 @@ public class Home extends Fragment {
 
         adapter = new MyPlantAdapter(options1, getContext());
         binding.recycler.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
 
 
         return view;

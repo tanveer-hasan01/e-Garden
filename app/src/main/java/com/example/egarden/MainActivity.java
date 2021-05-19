@@ -64,8 +64,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .load(sharedPreference.getImage())
                 .into(binding.profileImage);
 
+        binding.name.setText(sharedPreference.getName());
+        binding.email.setText(sharedPreference.getEmail());
 
-        binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        /*binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
@@ -76,6 +79,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     binding.waterPump.setClickable(true);
                 }
+            }
+        });*/
+
+        binding.autoWatering.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+
+                    Tools.snackInfo(MainActivity.this, "Water pump is automatically On/OFF");
+                    binding.waterPump.setChecked(false);
+
+                } else {
+
+
+                }
+            }
+        });
+
+
+        binding.waterPump.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+                if (binding.autoWatering.isChecked()) {
+
+                    binding.waterPump.setChecked(false);
+                    Tools.snackErrInfo(MainActivity.this, "Turn off Automatic watering !", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                } else {
+
+
+                }
+
             }
         });
 
