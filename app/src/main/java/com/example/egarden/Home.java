@@ -34,6 +34,8 @@ public class Home extends Fragment {
     MyPlantAdapter adapter;
     SharedPreference sharedPreference;
     DatabaseReference databaseRef;
+    DatabaseReference autoWatering,pump;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +44,15 @@ public class Home extends Fragment {
         View view = binding.getRoot();
 
         sharedPreference = SharedPreference.getPreferences(getContext());
+
         databaseRef = FirebaseDatabase.getInstance().getReference("plants");
+        autoWatering = FirebaseDatabase.getInstance().getReference("devices").child("device1");
+        autoWatering = FirebaseDatabase.getInstance().getReference("devices").child("device1");
+
+
+
+
+
         binding.feb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +75,14 @@ public class Home extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
+                    autoWatering.child("automatic_watering").setValue("on");
 
                     Tools.snackInfo((Activity) getContext(), "Water pump is automatically On/OFF");
                     binding.waterPump.setChecked(false);
 
                 } else {
 
-
+                    autoWatering.child("automatic_watering").setValue("off");
                 }
             }
         });
@@ -80,6 +91,9 @@ public class Home extends Fragment {
         binding.waterPump.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+
 
 
                 if (binding.autoWatering.isChecked()) {
@@ -92,6 +106,15 @@ public class Home extends Fragment {
                         }
                     });
                 } else {
+
+
+                    if (isChecked) {
+
+                        autoWatering.child("pump").setValue("on");
+                    }else {
+
+                        autoWatering.child("pump").setValue("off");
+                    }
 
 
                 }
