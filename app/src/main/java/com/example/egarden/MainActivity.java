@@ -41,13 +41,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private GoogleSignInClient mGoogleSignInClient;
 
-    SharedPreference sharedPreference = SharedPreference.getPreferences(MainActivity.this);
+    SharedPreference sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreference = SharedPreference.getPreferences(MainActivity.this);
 
 
         toolbarr = findViewById(R.id.toolbar);
@@ -55,6 +56,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbarTitle = findViewById(R.id.toolbarTitle);
         toolbarTitle.setText(R.string.app_name);
+
+
+        if (sharedPreference.getPump().equals("off")) {
+            binding.waterPump.setChecked(false);
+        } else if (sharedPreference.getPump().equals("on")) {
+            binding.waterPump.setChecked(true);
+        }
+
+
+        if (sharedPreference.getAutoWatering().equals("off")) {
+            binding.autoWatering.setChecked(false);
+        } else if (sharedPreference.getAutoWatering().equals("on")) {
+            binding.autoWatering.setChecked(true);
+        }
 
         setSupportActionBar(binding.include.toolbar);
 
@@ -124,10 +139,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     Tools.snackInfo(MainActivity.this, "Water pump is automatically On/OFF");
                     binding.waterPump.setChecked(false);
+                    sharedPreference.setAutoWatering("on");
 
                 } else {
 
-
+                    sharedPreference.setAutoWatering("off");
                 }
             }
         });
@@ -149,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     });
                 } else {
 
+                    if (isChecked) {
+                        sharedPreference.setPump("on");
+                    } else {
+                        sharedPreference.setPump("off");
+                    }
 
                 }
 
@@ -214,10 +235,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     AccessToken oldAccessToken,
                     AccessToken currentAccessToken) {
 
-                if (currentAccessToken == null){
+                if (currentAccessToken == null) {
                     //User logged out
                     LoginManager.getInstance().logOut();
                 }
             }
         };
-}}
+    }
+}

@@ -50,7 +50,18 @@ public class Home extends Fragment {
         autoWatering = FirebaseDatabase.getInstance().getReference("devices").child("device1");
 
 
+        if (sharedPreference.getPump().equals("off")) {
+            binding.waterPump.setChecked(false);
+        } else if (sharedPreference.getPump().equals("on")) {
+            binding.waterPump.setChecked(true);
+        }
 
+
+        if (sharedPreference.getAutoWatering().equals("off")) {
+            binding.autoWatering.setChecked(false);
+        } else if (sharedPreference.getAutoWatering().equals("on")) {
+            binding.autoWatering.setChecked(true);
+        }
 
 
         binding.feb.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +87,7 @@ public class Home extends Fragment {
                 if (isChecked) {
 
                     autoWatering.child("automatic_watering").setValue("on");
+                    sharedPreference.setAutoWatering("on");
 
                     Tools.snackInfo((Activity) getContext(), "Water pump is automatically On/OFF");
                     binding.waterPump.setChecked(false);
@@ -83,6 +95,7 @@ public class Home extends Fragment {
                 } else {
 
                     autoWatering.child("automatic_watering").setValue("off");
+                    sharedPreference.setAutoWatering("off");
                 }
             }
         });
@@ -91,9 +104,6 @@ public class Home extends Fragment {
         binding.waterPump.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
-
 
 
                 if (binding.autoWatering.isChecked()) {
@@ -111,9 +121,11 @@ public class Home extends Fragment {
                     if (isChecked) {
 
                         autoWatering.child("pump").setValue("on");
+                        sharedPreference.setPump("on");
                     }else {
 
                         autoWatering.child("pump").setValue("off");
+                        sharedPreference.setPump("off");
                     }
 
 

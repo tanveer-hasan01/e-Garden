@@ -62,4 +62,28 @@ public class SharedPreference {
         return sharedPreferences.getString("image","none");
     }
 
+
+    public void setPump(String pump)
+    {
+        editor.putString("pump",pump);
+        editor.apply();
+    }
+
+    public String getPump()
+    {
+        return sharedPreferences.getString("pump","none");
+    }
+
+
+    public void setAutoWatering(String auto)
+    {
+        editor.putString("auto",auto);
+        editor.apply();
+    }
+
+    public String getAutoWatering()
+    {
+        return sharedPreferences.getString("auto","none");
+    }
+
 }

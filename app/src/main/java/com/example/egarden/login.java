@@ -83,7 +83,9 @@ public class login extends AppCompatActivity {
 
         //// Configure Facebook Sign In
         callbackManager=CallbackManager.Factory.create();
-        binding.loginButton.setPermissions(Arrays.asList("email","user_birthday"));
+        //binding.loginButton.setPermissions(Arrays.asList("email","user_birthday"));
+        binding.loginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email"));
 
         binding.loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
