@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.egarden.databinding.ActivityMainBinding;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 sharedPreference.setImage("none");
                 signOut();
                 revokeAccess();
+                deleteAccessToken();
                 Toast.makeText(MainActivity.this, "Successfully Logout", Toast.LENGTH_SHORT).show();
                 Intent mainIntent = new Intent(MainActivity.this, Splash.class);
                 MainActivity.this.startActivity(mainIntent);
@@ -189,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
     }
 
+
+    //google logout
     private void revokeAccess() {
         mGoogleSignInClient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -198,4 +204,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
     }
-}
+
+
+    //facebook logout
+    private void deleteAccessToken() {
+        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+
+                if (currentAccessToken == null){
+                    //User logged out
+                    LoginManager.getInstance().logOut();
+                }
+            }
+        };
+}}

@@ -61,7 +61,7 @@ public class login extends AppCompatActivity {
         setContentView(binding.getRoot());
         sharedPreference = SharedPreference.getPreferences(login.this);
 
-        callbackManager=CallbackManager.Factory.create();
+
 
 
 
@@ -81,6 +81,8 @@ public class login extends AppCompatActivity {
         });
 
 
+        //// Configure Facebook Sign In
+        callbackManager=CallbackManager.Factory.create();
         binding.loginButton.setPermissions(Arrays.asList("email","user_birthday"));
 
         binding.loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -156,8 +158,7 @@ public class login extends AppCompatActivity {
             }
         });
 
-      /*  AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();*/
+
 
 
     }
@@ -170,10 +171,12 @@ public class login extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //for facebook
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
 
+        //for Google
         if (requestCode == RC_SIGN_IN) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -181,51 +184,10 @@ public class login extends AppCompatActivity {
         }
     }
 
-/*    AccessTokenTracker tokenTracker= new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
 
-            if (currentAccessToken==null)
-            {
-
-            }else {
-                loaduserProfile(currentAccessToken);
-            }
-
-        }
-    };*/
 
 
-    private void loaduserProfile(AccessToken accessToken)
-    {
-        GraphRequest request=GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                if(object!=null)
-                {
-                    try {
-                        String email=object.getString("email");
-                        String name=object.getString("name");
-                        String id=object.getString("id");
-                        Log.d(TAG, "onCompleted: "+id);
-                        Toast.makeText(login.this, ""+id, Toast.LENGTH_LONG).show();
-                    }catch (JSONException e)
-                    {
-
-                        Toast.makeText(login.this, "catch", Toast.LENGTH_LONG).show();
-                       e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        Bundle parameters=new Bundle();
-        parameters.putString("fields", "id,name,email,first_name,last_name");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 
 
     private Bundle getFacebookData(JSONObject object) {
@@ -260,6 +222,7 @@ public class login extends AppCompatActivity {
 
         return bundle;
     }
+
 
 
 

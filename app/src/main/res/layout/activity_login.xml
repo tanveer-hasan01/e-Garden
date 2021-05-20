@@ -7,6 +7,8 @@
     tools:context=".login">
 
 
+
+
     <RelativeLayout
         android:id="@+id/button"
         android:layout_margin="16dp"
@@ -35,26 +37,34 @@
 
 
         <ImageView
+            android:layout_centerVertical="true"
             android:padding="5dp"
             android:layout_margin="8dp"
             android:background="@color/white"
             android:src="@drawable/google"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
 
     </RelativeLayout>
 
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="16dp" />
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+
 
     <RelativeLayout
         android:visibility="gone"
