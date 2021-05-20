@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Map;
 
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView toolbarTitle;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private GoogleSignInClient mGoogleSignInClient;
+    Snackbar snackbar;
 
     SharedPreference sharedPreference;
 
@@ -167,8 +171,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     if (isChecked) {
                         sharedPreference.setPump("on");
+                        snackbar = Snackbar.make(
+                                findViewById(android.R.id.content),
+                                "Water pump is running !",
+                                Snackbar.LENGTH_INDEFINITE)
+                                .setActionTextColor(Color.WHITE);
+
+                        snackbar.getView().setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                        snackbar.show();
                     } else {
                         sharedPreference.setPump("off");
+                        snackbar.dismiss();
                     }
 
                 }

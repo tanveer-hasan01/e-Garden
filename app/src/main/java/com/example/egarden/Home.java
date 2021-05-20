@@ -3,10 +3,12 @@ package com.example.egarden;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.egarden.databinding.FragmentHomeBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -35,6 +38,7 @@ public class Home extends Fragment {
     SharedPreference sharedPreference;
     DatabaseReference databaseRef;
     DatabaseReference autoWatering,pump;
+    Snackbar snackbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,10 +126,19 @@ public class Home extends Fragment {
 
                         autoWatering.child("pump").setValue("on");
                         sharedPreference.setPump("on");
+                        snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                                "Water pump is running !",
+                                Snackbar.LENGTH_INDEFINITE)
+                                .setActionTextColor(Color.WHITE);
+
+                        snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                        snackbar.show();
                     }else {
 
                         autoWatering.child("pump").setValue("off");
                         sharedPreference.setPump("off");
+                        snackbar.dismiss();
+
                     }
 
 

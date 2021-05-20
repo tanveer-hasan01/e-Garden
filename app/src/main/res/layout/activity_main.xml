@@ -78,6 +78,7 @@
 
 
                     <Switch
+                        android:visibility="gone"
                         android:id="@+id/auto_watering"
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat"
@@ -88,6 +89,7 @@
                         android:layout_height="wrap_content"/>
 
                     <Switch
+                        android:visibility="gone"
                         android:id="@+id/water_pump"
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat"
