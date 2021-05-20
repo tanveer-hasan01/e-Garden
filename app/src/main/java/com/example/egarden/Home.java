@@ -37,7 +37,7 @@ public class Home extends Fragment {
     MyPlantAdapter adapter;
     SharedPreference sharedPreference;
     DatabaseReference databaseRef;
-    DatabaseReference autoWatering,pump;
+    DatabaseReference switchRef;
     Snackbar snackbar;
 
     @Override
@@ -50,8 +50,8 @@ public class Home extends Fragment {
         sharedPreference = SharedPreference.getPreferences(getContext());
 
         databaseRef = FirebaseDatabase.getInstance().getReference("plants");
-        autoWatering = FirebaseDatabase.getInstance().getReference("devices").child("device1");
-        autoWatering = FirebaseDatabase.getInstance().getReference("devices").child("device1");
+        switchRef = FirebaseDatabase.getInstance().getReference("devices").child("device1");
+
 
 
         if (sharedPreference.getPump().equals("off")) {
@@ -90,7 +90,7 @@ public class Home extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
-                    autoWatering.child("automatic_watering").setValue("on");
+                    switchRef.child("automatic_watering").setValue("on");
                     sharedPreference.setAutoWatering("on");
 
                     Tools.snackInfo((Activity) getContext(), "Water pump is automatically On/OFF");
@@ -98,7 +98,7 @@ public class Home extends Fragment {
 
                 } else {
 
-                    autoWatering.child("automatic_watering").setValue("off");
+                    switchRef.child("automatic_watering").setValue("off");
                     sharedPreference.setAutoWatering("off");
                 }
             }
@@ -124,7 +124,7 @@ public class Home extends Fragment {
 
                     if (isChecked) {
 
-                        autoWatering.child("pump").setValue("on");
+                        switchRef.child("pump").setValue("on");
                         sharedPreference.setPump("on");
                         snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                                 "Water pump is running !",
@@ -135,7 +135,7 @@ public class Home extends Fragment {
                         snackbar.show();
                     }else {
 
-                        autoWatering.child("pump").setValue("off");
+                        switchRef.child("pump").setValue("off");
                         sharedPreference.setPump("off");
                         snackbar.dismiss();
 
