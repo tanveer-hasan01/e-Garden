@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -24,10 +25,17 @@ import android.widget.Toast;
 import com.example.egarden.databinding.FragmentHomeBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
@@ -37,9 +45,9 @@ public class Home extends Fragment {
     MyPlantAdapter adapter;
     SharedPreference sharedPreference;
     DatabaseReference databaseRef;
-    DatabaseReference switchRef;
+    DatabaseReference switchRef,lastSend_reference;
     Snackbar snackbar;
-
+    FirebaseDatabase firebaseDatabase;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,9 +56,29 @@ public class Home extends Fragment {
         View view = binding.getRoot();
 
         sharedPreference = SharedPreference.getPreferences(getContext());
+        firebaseDatabase=FirebaseDatabase.getInstance();
 
         databaseRef = FirebaseDatabase.getInstance().getReference("plants");
         switchRef = FirebaseDatabase.getInstance().getReference("devices").child("device1");
+        lastSend_reference=firebaseDatabase.getReference("devices/device1/last_watering");
+
+
+
+        lastSend_reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+              binding.lastWatering.setText("  Last watering : "+snapshot.getValue(String.class));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
 
 
@@ -110,6 +138,8 @@ public class Home extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
 
+
+
                 if (binding.autoWatering.isChecked()) {
 
                     binding.waterPump.setChecked(false);
@@ -125,6 +155,12 @@ public class Home extends Fragment {
                     if (isChecked) {
 
                         switchRef.child("pump").setValue("on");
+
+                        DateFormat dateFormat = new SimpleDateFormat("h:mm a");
+                        Date date = new Date();
+                        switchRef.child("last_watering").setValue(""+dateFormat.format(date));
+
+
                         sharedPreference.setPump("on");
                         snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                                 "Water pump is running !",

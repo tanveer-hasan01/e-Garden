@@ -132,7 +132,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="  Last watering 12 : 20 PM"
+                        android:text="  Last watering 00 : 00"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
