@@ -79,7 +79,12 @@ public class Home extends Fragment {
         });
 
 
+        snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                "Water pump is running !",
+                Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(Color.WHITE);
 
+        snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
 
 
         if (sharedPreference.getPump().equals("off")) {
@@ -162,12 +167,6 @@ public class Home extends Fragment {
 
 
                         sharedPreference.setPump("on");
-                        snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                                "Water pump is running !",
-                                Snackbar.LENGTH_INDEFINITE)
-                                .setActionTextColor(Color.WHITE);
-
-                        snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                         snackbar.show();
                     }else {
 
